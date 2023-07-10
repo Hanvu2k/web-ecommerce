@@ -1,0 +1,164 @@
+.home-container {
+    // home banner
+    .home-banner {
+        height: 480px;
+        width: 100%;
+
+        .home-banner-link {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background-image: url("../assets/imgs/banner1.jpg");
+            background-repeat: no-repeat;
+            background-position: left;
+            background-size: cover;
+            padding-left: 80px;
+
+            .home-banner-content {
+                position: absolute;
+                text-transform: uppercase;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                width: 340px;
+
+                .content-title {
+                    color: var(--primary);
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+
+                .content-sale {
+                    font-size: 32px;
+                    line-height: 2.2rem;
+                }
+            }
+        }
+    }
+
+    // category
+    .category-container {
+        width: 100%;
+
+        .category-info {
+            text-align: center;
+
+            .category-sub-title {
+                color: var(--primary);
+                font-weight: 400;
+                text-transform: uppercase;
+            }
+
+            .category-title {
+                color: black;
+                font-weight: 400;
+                text-transform: uppercase;
+                padding: 8px;
+            }
+        }
+
+        .category-items {
+            .category-item-top {
+                .category-item-img {
+                    &:hover {
+                        opacity: 0.8;
+                        cursor: pointer;
+                    }
+
+                    &:first-child {
+                        padding-right: 8px;
+                    }
+                    .item-img-link {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .category-item-bot {
+                .category-item-img {
+                    &:hover {
+                        opacity: 0.8;
+                        cursor: pointer;
+                    }
+                    &:nth-child(2) {
+                        padding: 0 8px;
+                    }
+                    .item-img-link {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    // product-container
+    .product-container {
+        position: relative;
+        .product-info {
+            .product-sub-title {
+                color: var(--primary);
+                text-transform: uppercase;
+                font-weight: 400;
+            }
+
+            .product-title {
+                font-weight: 400;
+                text-transform: uppercase;
+            }
+        }
+
+        .product-items {
+        }
+    }
+
+    // other info
+    .otherinfo-container {
+        .otherinfo-bot,
+        .otherinfo-top {
+            background-color: #f4f5f9;
+            height: 156px;
+
+            .otherinfo-item {
+                font-weight: 400;
+
+                .item-title {
+                    font-size: 24px;
+                    text-transform: uppercase;
+                    padding: 4px;
+                }
+
+                .item-description {
+                    font-size: 18px;
+                    color: var(--primary);
+                    padding: 4px;
+                }
+            }
+        }
+
+        .otherinfo-bot {
+            background-color: transparent;
+            padding: 0 16px;
+            .input-user {
+                height: 68.8px;
+
+                .input-form {
+                    height: 100%;
+                    padding: 8px 16px;
+                    width: 420px;
+                    outline: none;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                .btn-subs {
+                    padding: 24px 32px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+.nav-container {
+    position: fixed;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    width: 100%;
+
+    .nav-content {
+        height: var(--nav-height);
+
+        .nav-left {
+            .nav-item {
+                text-decoration: none;
+                color: black;
+
+                &:first-child {
+                    color: #e7c37d;
+                }
+            }
+        }
+
+        .nav-right {
+            .nav-item {
+                &:hover {
+                    opacity: 0.8;
+                    cursor: pointer;
+                }
+
+                .nav-item-icon {
+                    color: var(--primary);
+                }
+            }
+
+            .log-out {
+                opacity: 0.8;
+                cursor: pointer;
+            }
+        }
+    }
+}

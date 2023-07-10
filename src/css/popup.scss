@@ -1,0 +1,58 @@
+.popup-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.8);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 300px 200px;
+
+    .popup {
+        background-color: white;
+        padding: 16px;
+        .popup-img {
+            padding: 16px;
+            height: 500px;
+            .popup-img-link {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .popup-content {
+            position: relative;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .icon {
+                position: absolute;
+                top: 0;
+                right: 12px;
+                cursor: pointer;
+            }
+
+            .product-name {
+                font-size: 24px;
+                max-width: 400px;
+            }
+
+            .product-price {
+                font-size: 18px;
+                color: var(--primary);
+            }
+
+            .product-description {
+                max-width: 400px;
+
+                line-height: 1.6rem;
+            }
+        }
+    }
+}

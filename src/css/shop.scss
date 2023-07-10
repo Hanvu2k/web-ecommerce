@@ -1,0 +1,86 @@
+.shop-container {
+    .shop-content {
+        // shop side bar
+        .sidebar {
+            margin-right: 24px;
+            width: 200px;
+
+            .sidebar-title {
+                text-transform: uppercase;
+                font-size: 24px;
+                font-weight: 400;
+                padding: 16px 0;
+            }
+
+            .sidebar-product {
+                background-color: black;
+                color: white;
+                text-transform: uppercase;
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+
+            .sidebar-chosen {
+                color: var(--primary);
+                padding: 8px 16px;
+                cursor: pointer;
+
+                &.actived {
+                    color: #e7c37d;
+                }
+            }
+
+            .product-type {
+                .product-type-name {
+                    padding: 8px 16px;
+                    background-color: #f4f5f9;
+                    text-transform: uppercase;
+                    font-weight: 500;
+                }
+
+                .product-type-items {
+                    list-style: none;
+
+                    .product-type-item {
+                        &.actived {
+                            color: #e7c37d;
+                        }
+                        color: var(--primary);
+                        padding: 8px 16px;
+                        text-transform: capitalize;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        .products-container {
+            width: 100%;
+
+            // shop search
+            .search-product {
+                margin: 24px 0;
+
+                .search-by-key {
+                    input {
+                        height: 38px;
+                        width: 280px;
+                        padding: 16px 12px;
+                        outline: none;
+                    }
+                }
+
+                .search-by-select {
+                    select {
+                        height: 24px;
+                        padding-right: 24px;
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}
