@@ -4,14 +4,14 @@ import "../../css/billTotal.scss"; // Importing the billTotal stylin
 import { formatNumber } from "../../utils"; // Importing the formatNumber utility function
 
 function BillTotal(props) {
-    const { name, btn = false, total, procduct = [] } = props;
+    const { name, btn = false, total, products = [] } = props;
 
     return (
         <div className="bill-total col-4">
             <h3 className="total-title"> {name}</h3>
             <div className="sub-total d-flex flex-column justify-content-between mt-4 ">
-                {procduct.length > 0 ? (
-                    procduct.map((item) => {
+                {products.length > 0 ? (
+                    products.map((item) => {
                         return (
                             <div
                                 key={item.productId}
@@ -19,7 +19,7 @@ function BillTotal(props) {
                             >
                                 <div className="product-name">{item.name}</div>
                                 <div className="price">
-                                    {formatNumber(total)} VND
+                                    {formatNumber(item.total)} VND
                                 </div>
                             </div>
                         );

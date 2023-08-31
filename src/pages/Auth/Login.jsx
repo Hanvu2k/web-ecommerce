@@ -2,27 +2,81 @@ import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { authActions } from "../../store/auth";
-import { validattion } from "../../utils";
+import apiConfig from "../../api/apiConfig";
 import AuthLayout from "./AuthLayout";
+import routes from "../../configs/routes";
 
 function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
+
     // State to store login errors
     const [errors, setError] = useState();
     // Getting the authentication status
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const { err, token } = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         // Redirect to home page if the user is already authenticated
-        if (isAuthenticated) {
-            navigate("/");
+        if (token) {
+            navigate(routes.home);
         }
-    }, [isAuthenticated, navigate]);
+    }, [token, navigate]);
+
+    useEffect(() => {
+        if (!err?.success && err?.message?.includes("Email")) {
+            setError({
+                email: err?.message,
+                password: null,
+            });
+        }
+
+        if (!err?.success && err?.message?.includes("password")) {
+            setError({
+                email: null,
+                password: err?.message,
+            });
+        }
+        setTimeout(() => {
+            setError({});
+        }, 2000);
+    }, [setError, err]);
+
+    const validate = (userInfo) => {
+        if (!userInfo.email || !userInfo.password) {
+            setError({
+                email: "Email required!",
+                password: "Password required!",
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        if (!userInfo.email.includes("@")) {
+            setError({
+                email: "Invalid email!",
+                password: null,
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        if (userInfo.password.length < 8) {
+            setError({
+                email: null,
+                password: "Password must have at least 8 charector!",
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        return true;
+    };
 
     const signInUser = async (e) => {
         e.preventDefault();
@@ -31,19 +85,17 @@ function Login() {
             email: emailRef.current.value,
             password: passwordRef.current.value,
         };
+        const validated = validate(userInput);
 
-        // Validate user input
-        const validationErrors = validattion(userInput);
-        setError(validattion(userInput).login);
-
-        if (!validationErrors.login) {
+        if (validated) {
             // Dispatch login action to authenticate the user
-            dispatch(
-                authActions.loginHandler({ userInfo: userInput, type: "LOGIN" })
-            );
+            await dispatch(apiConfig.loginUser(userInput));
             // Clear input fields
-            emailRef.current.value = "";
-            passwordRef.current.value = "";
+
+            if (Object.keys(err).length === 0) {
+                emailRef.current.value = "";
+                passwordRef.current.value = "";
+            }
         }
     };
 
@@ -54,7 +106,7 @@ function Login() {
                     <div
                         className={`form-control ${
                             errors?.email && "validate"
-                        }`}
+                        } `}
                     >
                         <input ref={emailRef} type="text" placeholder="Email" />
                         {errors?.email && (
@@ -68,7 +120,7 @@ function Login() {
                     >
                         <input
                             ref={passwordRef}
-                            type="current-password"
+                            type="password"
                             placeholder="Password"
                         />
                         {errors?.password && (

@@ -78,7 +78,7 @@
                     }
 
                     input[type="number"] {
-                        width: 70px;
+                        width: 80px;
                         text-align: center;
                         outline: none;
                         border: none;
@@ -150,6 +150,8 @@
 
     // related product
     .related-product {
+        min-height: 200px;
+
         h3 {
             font-size: 24px;
             font-weight: 400;

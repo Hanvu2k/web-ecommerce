@@ -1,49 +1,41 @@
 import React, { Fragment } from "react";
 import { ProductItem } from "../../components/ProductItem";
-import { infoProductActions } from "../../store/inforProduct";
 import routes from "../../configs/routes";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Spinning from "../../components/spining/Spinner";
+import { useSelector } from "react-redux";
 
 function ProductItems(props) {
-    const { category = [], sortedProducts = [] } = props;
+    const { sortedProducts = [] } = props;
+    const { isLoading } = useSelector((state) => state.product);
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const changeToDetailPageHandler = (item) => {
-        // Dispatch an action to set the information of the selected product
-        dispatch(infoProductActions.setInfoProduct(item));
         // Navigate to the detail page of the selected product
-        navigate(routes.detail.replace(":id", item._id.$oid));
+        navigate(routes.detail.replace(":productId", item._id));
     };
 
     return (
-        <div className="row products-items my-4">
-            {sortedProducts
-                ? sortedProducts?.map((item) => (
-                      <Fragment key={item._id.$oid}>
-                          <ProductItem
-                              col="col-4"
-                              img_url={item.img1}
-                              name={item.name}
-                              price={item.price}
-                              onClick={() => changeToDetailPageHandler(item)}
-                          />
-                      </Fragment>
-                  ))
-                : category?.map((item) => (
-                      <Fragment key={item._id.$oid}>
-                          <ProductItem
-                              col="col-4"
-                              img_url={item.img1}
-                              name={item.name}
-                              price={item.price}
-                              onClick={() => changeToDetailPageHandler(item)}
-                          />
-                      </Fragment>
-                  ))}
-        </div>
+        <Spinning spinning={isLoading}>
+            <div className="row products-items my-4">
+                {sortedProducts.length > 0 ? (
+                    sortedProducts?.map((item) => (
+                        <Fragment key={item._id}>
+                            <ProductItem
+                                col="col-4"
+                                img_url={item.img}
+                                name={item.name}
+                                price={item.price}
+                                onClick={() => changeToDetailPageHandler(item)}
+                            />
+                        </Fragment>
+                    ))
+                ) : (
+                    <div className="no-product">No product found</div>
+                )}
+            </div>
+        </Spinning>
     );
 }
 

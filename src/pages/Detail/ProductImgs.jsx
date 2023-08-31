@@ -9,7 +9,7 @@ function ProductImgs(props) {
                 <div className="product-img-sub">
                     <img
                         className="product-imgsub-link"
-                        src={productInfo.img4}
+                        src={productInfo?.photos?.[3]}
                         alt=""
                     />
                 </div>
@@ -17,7 +17,7 @@ function ProductImgs(props) {
                 <div className="product-img-sub">
                     <img
                         className="product-imgsub-link"
-                        src={productInfo.img3}
+                        src={productInfo?.photos?.[2]}
                         alt=""
                     />
                 </div>
@@ -25,7 +25,7 @@ function ProductImgs(props) {
                 <div className="product-img-sub">
                     <img
                         className="product-imgsub-link"
-                        src={productInfo.img2}
+                        src={productInfo?.photos?.[1]}
                         alt=""
                     />
                 </div>
@@ -33,7 +33,7 @@ function ProductImgs(props) {
                 <div className="product-img-sub">
                     <img
                         className="product-imgsub-link"
-                        src={productInfo.img1}
+                        src={productInfo?.photos?.[0]}
                         alt=""
                     />
                 </div>
@@ -42,7 +42,7 @@ function ProductImgs(props) {
             <div className="product-img-main">
                 <img
                     className="product-imgmain-link"
-                    src={productInfo.img1}
+                    src={productInfo?.photos?.[0]}
                     alt=""
                 />
             </div>

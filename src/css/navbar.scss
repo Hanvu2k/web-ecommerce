@@ -12,10 +12,10 @@
             .nav-item {
                 text-decoration: none;
                 color: black;
+            }
 
-                &:first-child {
-                    color: #e7c37d;
-                }
+            .active {
+                color: #e7c37d;
             }
         }
 

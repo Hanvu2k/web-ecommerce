@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useMatch } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useMatch, useParams } from "react-router-dom";
 
 import "../../css/detail.scss";
 import ProductDescription from "./ProductDescription";
@@ -8,12 +8,21 @@ import RealtedProduct from "./RealtedProduct";
 import ProductContent from "./ProductContent";
 import ProductImgs from "./ProductImgs";
 import routes from "../../configs/routes";
+import apiConfig from "../../api/apiConfig";
+import Spinning from "../../components/spining/Spinner";
 
 function Detail() {
     // Retrieve product information from the Redux store
-    const productInfo = useSelector((state) => state.detailProduct.infoProduct);
+    const { product, isLoading } = useSelector((state) => state.product);
+
     // Get the current route match
     const path = useMatch(routes.detail);
+    const dispatch = useDispatch();
+    const { productId } = useParams();
+
+    useEffect(() => {
+        dispatch(apiConfig.getProductById(productId));
+    }, [dispatch, productId]);
 
     useEffect(() => {
         // Scroll to the top of the page when the path changes
@@ -21,14 +30,16 @@ function Detail() {
     }, [path]);
 
     return (
-        <div className="detail-container">
-            <div className="detail-product-info my-6 row">
-                <ProductImgs productInfo={productInfo} />
-                <ProductContent productInfo={productInfo} />
+        <Spinning spinning={isLoading}>
+            <div className="detail-container">
+                <div className="detail-product-info my-6 row">
+                    <ProductImgs productInfo={product} />
+                    <ProductContent productInfo={product} />
+                </div>
+                <ProductDescription productInfo={product} />
+                <RealtedProduct productInfo={product} />
             </div>
-            <ProductDescription productInfo={productInfo} />
-            <RealtedProduct productInfo={productInfo} />
-        </div>
+        </Spinning>
     );
 }
 

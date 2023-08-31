@@ -1,29 +1,24 @@
 import React, { Fragment } from "react";
 
 function ShopSidebar(props) {
-    const {
-        showAllProductsHandler,
-        sortedProducts,
-        selectedOption,
-        softProductHandler,
-    } = props;
+    const { selectedOption, softProductHandler } = props;
 
     // Shop sibar dâta
     const categoryAll = [
         {
             id: "1",
             type: "iphone & mac",
-            product: ["iphone", "ipad", "macbook"],
+            product: ["Iphone", "Ipad", "Macbook"],
         },
         {
             id: "2",
             type: "wireless",
-            product: ["airpod", "watch"],
+            product: ["Airpod", "Watch"],
         },
         {
             id: "3",
             type: "other",
-            product: ["mouse", "keyboard", "other"],
+            product: ["Mouse", "Keyboard", "Other"],
         },
     ];
 
@@ -32,8 +27,10 @@ function ShopSidebar(props) {
             <h3 className="sidebar-title">categories</h3>
             <div className="sidebar-product">Apple</div>
             <div
-                className={`sidebar-chosen ${sortedProducts ? "" : "actived"} `}
-                onClick={showAllProductsHandler}
+                className={`sidebar-chosen ${
+                    selectedOption === "All" && "actived"
+                } `}
+                onClick={() => softProductHandler("All")}
             >
                 All
             </div>

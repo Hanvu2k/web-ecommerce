@@ -1,15 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getMessage } from "../api/messageApi";
 
 // Define the initial state for the message slice
-const initialMessageUPState = { isShow: false };
+const initialMessageUPState = { isShow: false, messages: [] };
 
 const messageSlice = createSlice({
     name: "message",
     initialState: initialMessageUPState,
     reducers: {
+        getMessage(state, action) {
+            state.messages?.push(action.payload);
+        },
         // Reducer function to toggle the isShow state
         toggleShowMessageUp(state) {
             state.isShow = !state.isShow;
+        },
+    },
+    extraReducers: {
+        // get
+        [getMessage.pending]: (state) => {},
+        [getMessage.fulfilled]: (state, action) => {
+            state.messages = action.payload?.message;
+        },
+        [getMessage.rejected]: (state) => {
+            state.isLoading = false;
         },
     },
 });

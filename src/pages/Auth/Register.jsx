@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import routes from "../../configs/routes";
 
-import { authActions } from "../../store/auth"; // Importing the authActions from the auth store
-import { validattion } from "../../utils"; // Import validattion util
+import routes from "../../configs/routes";
 import AuthLayout from "./AuthLayout";
+import apiConfig from "../../api/apiConfig";
 
 function Register() {
     const fullNameRef = useRef();
@@ -14,47 +13,130 @@ function Register() {
     const phoneRef = useRef();
     const [errors, setError] = useState();
     // Getting the authentication status
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const { err, token } = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         // Redirect to the home page if the user is already authenticated
-        if (isAuthenticated) {
+        if (token) {
             navigate(routes.home);
         }
-    }, [isAuthenticated, navigate]);
+    }, [token, navigate]);
 
-    const signUpUser = (e) => {
+    useEffect(() => {
+        if (!err?.success && err?.message?.includes("Email")) {
+            setError({
+                email: err?.message,
+                password: null,
+                phone: null,
+                fullName: null,
+            });
+        }
+
+        if (!err?.success && err?.message?.includes("password")) {
+            setError({
+                email: null,
+                password: err?.message,
+                phone: null,
+                fullName: null,
+            });
+        }
+        if (!err?.success && err?.message?.includes("Fullname")) {
+            setError({
+                email: null,
+                password: null,
+                phone: null,
+                fullName: err?.message,
+            });
+        }
+        setTimeout(() => {
+            setError({});
+        }, 2000);
+    }, [setError, err]);
+
+    const validate = (userInfo) => {
+        if (
+            !userInfo.email ||
+            !userInfo.password ||
+            !userInfo.fullName ||
+            !userInfo.phoneNumber
+        ) {
+            setError({
+                email: "Email required!",
+                password: "Password required!",
+                phone: "Phone number required!",
+                fullName: "Full name required!",
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        if (!userInfo.email.includes("@")) {
+            setError({
+                email: "Invalid email!",
+                password: null,
+                phone: null,
+                fullName: null,
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        if (userInfo.password.length < 8) {
+            setError({
+                email: null,
+                password: "Password must have at least 8 charector!",
+                phone: null,
+                fullName: null,
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        if (isNaN(userInfo.phoneNumber)) {
+            setError({
+                email: null,
+                password: null,
+                phone: "Phone number must be number type!",
+                fullName: null,
+            });
+            setTimeout(() => {
+                setError({});
+            }, 1000);
+            return false;
+        }
+        return true;
+    };
+
+    const signUpUser = async (e) => {
         e.preventDefault();
 
         const userInfo = {
-            id: Math.floor(Math.random() * 100000),
             fullName: fullNameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            phone: phoneRef.current.value,
+            phoneNumber: phoneRef.current.value,
         };
 
-        // Validate user input
-        const validationErrors = validattion(userInfo);
-        setError(validattion(userInfo).register);
+        const validated = validate(userInfo);
 
-        if (!validationErrors.register) {
+        if (validated) {
             // Dispatch login action to authenticate the user
-            dispatch(
-                authActions.loginHandler({
-                    userInfo: userInfo,
-                    type: "REGISTER",
-                })
-            );
+
+            await dispatch(apiConfig.registerUser(userInfo));
 
             // Clear input fields
-            fullNameRef.current.value = "";
-            emailRef.current.value = "";
-            passwordRef.current.value = "";
-            phoneRef.current.value = "";
+            if (Object.keys(err).length === 0) {
+                fullNameRef.current.value = "";
+                emailRef.current.value = "";
+                passwordRef.current.value = "";
+                phoneRef.current.value = "";
+            }
         }
     };
 

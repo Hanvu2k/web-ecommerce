@@ -1,12 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { saveToStorage, getFromStorage } from "../utils";
-
-// get product detail from local storage, or initialize as an empty object
-const productDetail = JSON.parse(getFromStorage("productDetail")) || {};
-
 // Define the initial state for the infoProduct slice
-const initialPopUPState = { infoProduct: productDetail };
+const initialPopUPState = { infoProduct: {} };
 
 const infoProductSlice = createSlice({
     name: "inforProduct",
@@ -19,9 +14,6 @@ const infoProductSlice = createSlice({
 
             // Update the infoProduct state with the new payload
             state.infoProduct = action.payload;
-
-            // Save the updated product detail to local storage
-            saveToStorage("productDetail", JSON.stringify(state.infoProduct));
         },
     },
 });

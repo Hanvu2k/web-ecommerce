@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import "../../css/home.scss";
 import HomBanner from "./HomBanner";
 import Categories from "./Categories";
 import Product from "./Product";
 import OtherInfo from "./OtherInfo";
-import getProduct from "../../api/index";
 import { MessageBox } from "../../components/MessageBox";
+import apiConfig from "../../api/apiConfig";
+import { useDispatch, useSelector } from "react-redux";
 
 function Home() {
-    const [productArr, setProductArr] = useState([]);
+    const dispatch = useDispatch();
+    const { token } = useSelector((state) => state.user);
 
     useEffect(() => {
-        // Fetch the product data from the API
-        const fetchData = async () => {
-            const data = await getProduct();
-            setProductArr(data);
+        if (token) {
+            dispatch(apiConfig.getCart());
+        }
+    }, [token, dispatch]);
+
+    useEffect(() => {
+        const featchData = async () => {
+            await dispatch(apiConfig.getMe());
         };
-        fetchData();
-    }, []);
+        featchData();
+    }, [dispatch]);
 
     return (
         <div className="home-container">
             <HomBanner />
             <Categories />
-            <Product productArr={productArr} />
+            <Product />
             <OtherInfo />
             <MessageBox />
         </div>

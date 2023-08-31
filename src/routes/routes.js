@@ -6,6 +6,8 @@ import { Shop } from "../pages/Shop";
 import { Login, Register } from "../pages/Auth";
 import { Cart } from "../pages/Cart";
 import { Checkout } from "../pages/Checkout";
+import { History } from "../pages/history";
+import { OrderDetail } from "../pages/OrderDetail";
 
 // Define an array of public routes
 const publicRoutes = [
@@ -43,6 +45,16 @@ const publicRoutes = [
         path: routes.checkout, // Path for the checkout page
         component: <Checkout />, // Component to render for the checkout page
         name: "Checkout page", // Name of the route
+    },
+    {
+        path: routes.history, // Path for the checkout page
+        component: <History />, // Component to render for the checkout page
+        name: "history", // Name of the route
+    },
+    {
+        path: routes.infoOrder, // Path for the checkout page
+        component: <OrderDetail />, // Component to render for the checkout page
+        name: "history", // Name of the route
     },
     {
         path: "/*", // Wildcard path for any other pages

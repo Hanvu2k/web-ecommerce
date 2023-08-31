@@ -7,60 +7,114 @@ import { Banner } from "../../components/Banner";
 import { BillTotal } from "../../components/BillTotal";
 import routes from "../../configs/routes";
 import { formatNumber } from "../../utils";
-import { cartActions } from "../../store/cart";
+import { cartActions } from "../../store/cartSlice";
 import { ReactComponent as ArrowLeft } from "../../assets/icon/vectorLeft.svg";
 import { ReactComponent as ArrowRight } from "../../assets/icon/vectorRight.svg";
 import { ReactComponent as Trash } from "../../assets/icon/vectorTrash.svg";
 import { ReactComponent as BackLeft } from "../../assets/icon/arrow-left-large.svg";
 import { ReactComponent as BackRight } from "../../assets/icon/arrow-right-large.svg";
+import apiConfig from "../../api/apiConfig";
 
 function Cart() {
     // Getting the authentication status
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    // Getting the currUser
-    const userInfor = useSelector((state) => state.auth.currUser);
-    // Getting the products
-    const products = useSelector((state) => state.cart.products);
-    // Getting the total
-    const total = useSelector((state) => state.cart.total);
-
+    const { token } = useSelector((state) => state.user);
+    // Getting the product.updateCart
+    const products = useSelector((state) => state.cart.carts?.products);
+    const { total } = useSelector((state) => state.cart?.carts);
+    const cart = useSelector((state) => state.cart.carts);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
         // Redirect to login page if the user is not authenticated
-        if (!isAuthenticated) {
-            navigate("/login");
+        if (!token) {
+            navigate(routes.login);
         }
-    }, [isAuthenticated, navigate, dispatch]);
+    }, [token, navigate, dispatch]);
 
     // Dispatch an action to decrement the quantity of a product in the cart
-    const decreBtnHandler = (id) => {
-        dispatch(
+    const decreBtnHandler = async (id, quantity) => {
+        if (quantity === 1) {
+            const confirmed = window.confirm(
+                "Do you want to remove this product from the cart?"
+            );
+
+            if (confirmed) {
+                // Remove the product from the cart
+                dispatch(apiConfig.deleteProductInCart(id));
+                dispatch(cartActions.onDeleteCart({ productId: id }));
+                return;
+            }
+
+            return;
+        }
+
+        await dispatch(
             cartActions.onUpdateToCart({
-                userId: userInfor.id,
                 productId: id,
                 type: "DECREMENT",
             })
         );
+
+        const index = cart.products.findIndex(
+            (product) => product.productId === id
+        );
+        if (index !== -1) {
+            const updatedProduct = [...cart.products];
+            updatedProduct[index] = {
+                ...updatedProduct[index],
+                quantity: updatedProduct[index].quantity - 1,
+            };
+
+            let updateCart = {
+                ...cart,
+                products: updatedProduct,
+                total: cart.total - updatedProduct[index].price,
+            };
+            dispatch(apiConfig.updateCart(updateCart));
+        }
     };
 
     // Dispatch an action to increment the quantity of a product in the cart
     const increBtnHandler = (id) => {
         dispatch(
             cartActions.onUpdateToCart({
-                userId: userInfor.id,
                 productId: id,
                 type: "INCREMENT",
             })
         );
+
+        const index = cart.products.findIndex(
+            (product) => product.productId === id
+        );
+        if (index !== -1) {
+            const updatedProduct = [...cart.products];
+            updatedProduct[index] = {
+                ...updatedProduct[index],
+                quantity: updatedProduct[index].quantity + 1,
+            };
+
+            let updateCart = {
+                ...cart,
+                products: updatedProduct,
+                total: cart.total + updatedProduct[index].price,
+            };
+
+            dispatch(apiConfig.updateCart(updateCart));
+        }
     };
 
     // Dispatch an action to delete a product from the cart
     const deleteProductHandler = (id) => {
-        dispatch(
-            cartActions.onDeleteCart({ userId: userInfor.id, productId: id })
+        const confirmed = window.confirm(
+            "Do you want to remove this product from the cart?"
         );
+
+        if (confirmed) {
+            // Remove the product from the cart
+            dispatch(cartActions.onDeleteCart({ productId: id }));
+            dispatch(apiConfig.deleteProductInCart(id));
+        }
     };
 
     return (
@@ -107,7 +161,8 @@ function Cart() {
                                                     className="btn-left"
                                                     onClick={() =>
                                                         decreBtnHandler(
-                                                            item.productId
+                                                            item.productId,
+                                                            item.quantity
                                                         )
                                                     }
                                                 >
@@ -116,7 +171,7 @@ function Cart() {
                                                 <input
                                                     readOnly
                                                     type="number"
-                                                    value={item.quantitty}
+                                                    value={item.quantity}
                                                 />
                                                 <button
                                                     className="btn-right"
@@ -147,6 +202,9 @@ function Cart() {
                                 })}
                             </tbody>
                         </table>
+                        {products.length === 0 && (
+                            <div className="no-product">No product</div>
+                        )}
                     </div>
 
                     <BillTotal name="billTotal" btn={true} total={total} />

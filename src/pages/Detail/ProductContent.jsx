@@ -1,55 +1,58 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { formatNumber } from "../../utils";
-import { cartActions } from "../../store/cart";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowLeft } from "../../assets/icon/vectorLeft.svg";
 import { ReactComponent as ArrowRight } from "../../assets/icon/vectorRight.svg";
+import { cartActions } from "../../store/cartSlice";
+import apiConfig from "../../api/apiConfig";
 
 function ProductContent(props) {
     const { productInfo } = props;
     // State to track the quantity of the product
-    const [quantitty, setQuantitty] = useState(1);
+    const [quantity, setQuantity] = useState(1);
     // Get the current user information from the Redux store
-    const userInfor = useSelector((state) => state.auth.currUser);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const addToCartHandler = () => {
-        const product = {
-            productId: productInfo._id.$oid,
-            name: productInfo.name,
-            img: productInfo.img1,
-            price: productInfo.price,
-            quantitty: quantitty,
-            total: productInfo.price * quantitty,
+        const newProduct = {
+            productId: productInfo._id,
+            quantity: quantity,
         };
 
         // Dispatch an action to add the product to the cart
+        dispatch(apiConfig.addToCart(newProduct));
         dispatch(
             cartActions.onAddToCart({
-                userId: userInfor.id,
-                product: product,
+                product: {
+                    productId: productInfo._id,
+                    name: productInfo.name,
+                    img: productInfo.photos[0],
+                    price: productInfo.price,
+                    quantity: quantity,
+                    total: productInfo.price * quantity,
+                },
             })
         );
-        setQuantitty(1); // Reset the quantity to 1
+
+        setQuantity(1); // Reset the quantity to 1
         navigate("/cart"); // Navigate to the cart page
     };
 
     // handle decre quantitty
     const decreBtnHandler = () => {
-        if (quantitty === 1) {
+        if (quantity === 1) {
             return;
         }
-
-        setQuantitty((prevQuantitty) => prevQuantitty - 1);
+        setQuantity((prevQuantity) => prevQuantity - 1);
     };
 
     // handle incre quantitty
     const increBtnHandler = () => {
-        setQuantitty((prevQuantitty) => prevQuantitty + 1);
+        setQuantity((prevQuantity) => prevQuantity + 1);
     };
 
     return (
@@ -75,9 +78,9 @@ function ProductContent(props) {
                         </button>
                         <input
                             type="number"
-                            value={quantitty}
+                            value={quantity}
                             onChange={(event) =>
-                                setQuantitty(event.target.value)
+                                setQuantity(event.target.value)
                             }
                             min={1}
                         />

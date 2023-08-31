@@ -13,14 +13,14 @@ function ProductDescription(props) {
             <h3 className="product-description-title">product description</h3>
             <div className="product-description-content">
                 <div className="product-description-property">
-                    {formatText(productInfo?.long_desc)[0]}
+                    {formatText(productInfo?.long_desc)?.[0]}
                 </div>
                 <ul className="product-description-list">
                     {formatText(productInfo?.long_desc)?.map((item, index) => {
                         return (
                             <Fragment key={index}>
                                 <li className="list-item">
-                                    {item.includes("-") ? item : ` - ${item}`}
+                                    {item?.includes("-") ? item : ` - ${item}`}
                                 </li>
                             </Fragment>
                         );

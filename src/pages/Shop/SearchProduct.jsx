@@ -1,26 +1,29 @@
 import React, { Fragment } from "react";
+import { DebounceInput } from "react-debounce-input";
 
 function SearchProduct(props) {
-    const { searchProduct, softProductHandler, selectedOption } = props;
+    const { searchKey, onSearch, softProductHandler, selectedOption } = props;
 
     // Option data
     const optionsArr = [
-        { value: "iphone", name: "Iphone" },
-        { value: "ipad", name: "Ipad" },
-        { value: "macbook", name: "Macbook" },
-        { value: "airpod", name: "Airpod" },
-        { value: "watch", name: "Watch" },
-        { value: "mouse", name: "Mouse" },
-        { value: "keyboard", name: "Keyboard" },
+        { value: "Iphone", name: "Iphone" },
+        { value: "Ipad", name: "Ipad" },
+        { value: "Macbook", name: "Macbook" },
+        { value: "Airpod", name: "Airpod" },
+        { value: "Watch", name: "Watch" },
+        { value: "Mouse", name: "Mouse" },
+        { value: "Keyboard", name: "Keyboard" },
     ];
 
     return (
         <div className="search-product d-flex justify-content-between">
             <div className="search-by-key">
-                <input
-                    type="text"
+                <DebounceInput
                     placeholder="Enter Search Here!"
-                    onChange={(event) => searchProduct(event.target.value)}
+                    minLength={1}
+                    debounceTimeout={500}
+                    onChange={(event) => onSearch(event.target.value)}
+                    value={searchKey}
                 />
             </div>
             <div className="search-by-select">

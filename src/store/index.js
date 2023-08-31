@@ -1,19 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import popupReducer from "./PopUp";
+import popupReducer from "./PopUpSilce";
 import inforProductReducer from "./inforProduct";
-import authReducer from "./auth";
-import cartReducer from "./cart";
-import messageReducer from "./message";
+import cartReducer from "./cartSlice";
+import messageReducer from "./messageSlice";
+import productReducer from "./productSlice";
+import userReducer from "./userSlice";
+import orderReducer from "./orderSlice";
 
 // Create the Redux store with combined reducers
 const store = configureStore({
     reducer: {
         popup: popupReducer,
         detailProduct: inforProductReducer,
-        auth: authReducer,
         cart: cartReducer,
         message: messageReducer,
+        product: productReducer,
+        user: userReducer,
+        order: orderReducer,
     },
 });
 

@@ -1,12 +1,18 @@
-import React, { Fragment } from "react";
-import { useDispatch } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { popActions } from "../../store/PopUp";
+import { popActions } from "../../store/PopUpSilce";
 import { ProductItem } from "../../components/ProductItem";
+import apiConfig from "../../api/apiConfig";
 import Popup from "../../components/Popup/Popup";
 
-function Product({ productArr }) {
+function Product() {
+    const { products } = useSelector((state) => state.product);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(apiConfig.getTrendingProduct());
+    }, [dispatch]);
 
     // Dispatch showPopUp action
     const showPopUpHandler = (item) => {
@@ -22,11 +28,11 @@ function Product({ productArr }) {
                     <h2 className="product-title">Top trending products</h2>
                 </div>
                 <div className="row product-items">
-                    {productArr?.map((item) => {
+                    {products?.map((item) => {
                         return (
-                            <Fragment key={item._id.$oid}>
+                            <Fragment key={item._id}>
                                 <ProductItem
-                                    img_url={item.img1}
+                                    img_url={item.img}
                                     name={item.name}
                                     price={item.price}
                                     onClick={() => showPopUpHandler(item)}
