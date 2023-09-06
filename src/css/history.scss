@@ -1,29 +1,33 @@
-table {
+.history-container {
+  min-height: 30vh;
+
+  table {
     border-collapse: collapse;
 
     .table-head {
-        .table-head-content {
-            text-align: center;
-            text-transform: uppercase;
-            font-weight: 600;
-            background-color: #f4f5f9;
-            .table-head-item {
-                padding: 8px 16px;
-            }
+      .table-head-content {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 600;
+        background-color: #f4f5f9;
+        .table-head-item {
+          padding: 8px 16px;
         }
+      }
     }
 
     .table-body {
-        .table-body-content {
-            text-align: center;
-            color: var(--primary);
-            .table-body-item {
-                padding: 8px 16px;
+      .table-body-content {
+        text-align: center;
+        color: var(--primary);
+        .table-body-item {
+          padding: 8px 16px;
 
-                button {
-                    cursor: pointer;
-                }
-            }
+          button {
+            cursor: pointer;
+          }
         }
+      }
     }
+  }
 }
