@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { ClientLayout } from "./components/LayOuts";
-import { publicRoutes } from "./routes";
+import  publicRoutes  from "./routes";
 
 function App() {
     return (
