@@ -22,8 +22,11 @@ function ClientLayout() {
         const featchData = async () => {
             await dispatch(apiConfig.getMe());
         };
+
+        if (token){
         featchData();
-    }, [dispatch]);
+        }
+    }, [dispatch,token]);
 
     // If the current route is login or register, display the nested routes
     if (isViewBlank) {
