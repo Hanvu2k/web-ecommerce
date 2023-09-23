@@ -13,7 +13,7 @@ function ProductItems(props) {
 
     const changeToDetailPageHandler = (item) => {
         // Navigate to the detail page of the selected product
-        navigate(routes.detail.replace(":productId", item._id));
+        navigate(routes?.detail.replace(":productId", item._id));
     };
 
     return (

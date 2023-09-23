@@ -9,7 +9,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<ClientLayout />}>
-                    {publicRoutes.map((route, index) => (
+                    {publicroutes?.map((route, index) => (
                         <Route
                             key={index}
                             path={route.path}

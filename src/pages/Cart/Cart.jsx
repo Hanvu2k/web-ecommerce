@@ -28,7 +28,7 @@ function Cart() {
     useEffect(() => {
         // Redirect to login page if the user is not authenticated
         if (!token) {
-            navigate(routes.login);
+            navigate(routes?.login);
         }
     }, [token, navigate, dispatch]);
 
@@ -212,14 +212,14 @@ function Cart() {
                 <div className="user-behavier col-8 d-flex justify-content-between align-items-center">
                     <div
                         className="shoping-behavier d-flex align-items-center"
-                        onClick={() => navigate(routes.shop)}
+                        onClick={() => navigate(routes?.shop)}
                     >
                         <BackLeft />
                         <div className="ml-2">Continue shopping</div>
                     </div>
                     <div
                         className="checkout-behavier d-flex align-items-center"
-                        onClick={() => navigate(routes.checkout)}
+                        onClick={() => navigate(routes?.checkout)}
                     >
                         <div className="mr-2">Proceed to checkout</div>
                         <BackRight />

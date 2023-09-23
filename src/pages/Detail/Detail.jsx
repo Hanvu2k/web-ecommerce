@@ -16,7 +16,7 @@ function Detail() {
     const { product, isLoading } = useSelector((state) => state.product);
 
     // Get the current route match
-    const path = useMatch(routes.detail);
+    const path = useMatch(routes?.detail);
     const dispatch = useDispatch();
     const { productId } = useParams();
 

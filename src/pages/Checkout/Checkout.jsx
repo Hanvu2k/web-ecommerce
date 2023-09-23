@@ -44,7 +44,7 @@ const Checkout = () => {
 
         await dispatch(apiConfig.getCart());
 
-        navigate(routes.history);
+        navigate(routes?.history);
         setUserInfo({
             name: "",
             email: "",

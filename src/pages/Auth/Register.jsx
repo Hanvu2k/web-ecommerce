@@ -21,7 +21,7 @@ function Register() {
     useEffect(() => {
         // Redirect to the home page if the user is already authenticated
         if (token) {
-            navigate(routes.home);
+            navigate(routes?.home);
         }
     }, [token, navigate]);
 

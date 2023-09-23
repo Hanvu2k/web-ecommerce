@@ -19,7 +19,7 @@ function History() {
   useEffect(() => {
     // Redirect to home page if the user is already authenticated
     if (!token) {
-      navigate(routes.home);
+      navigate(routes?.home);
     }
   }, [token, navigate]);
 
@@ -28,7 +28,7 @@ function History() {
   }, [dispatch]);
 
   const handleOrderDetail = (id) => {
-    navigate(routes.infoOrder.replace(":orderId", id));
+    navigate(routes?.infoOrder.replace(":orderId", id));
   };
 
   return (

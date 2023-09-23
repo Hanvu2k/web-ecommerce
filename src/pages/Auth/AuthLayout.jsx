@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 function AuthLayout({ children }) {
     const navigate = useNavigate();
     // Checking current route matches the register route
-    const isViewRegister = useMatch(routes.register);
+    const isViewRegister = useMatch(routes?.register);
     const isLoading = useSelector((state) => state.user.isLoading);
 
     return (
@@ -24,14 +24,14 @@ function AuthLayout({ children }) {
                         {isViewRegister ? (
                             <>
                                 <span>Login? </span>
-                                <span onClick={() => navigate(routes.login)}>
+                                <span onClick={() => navigate(routes?.login)}>
                                     Click
                                 </span>
                             </>
                         ) : (
                             <>
                                 <span>Create an account? </span>
-                                <span onClick={() => navigate(routes.register)}>
+                                <span onClick={() => navigate(routes?.register)}>
                                     Sign up
                                 </span>
                             </>
@@ -42,7 +42,7 @@ function AuthLayout({ children }) {
                                 color: "black",
                                 cursor: "pointer",
                             }}
-                            onClick={() => navigate(routes.home)}
+                            onClick={() => navigate(routes?.home)}
                         >
                             Back to home
                         </div>

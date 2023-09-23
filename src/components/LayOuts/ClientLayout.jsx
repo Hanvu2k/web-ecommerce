@@ -12,8 +12,8 @@ function ClientLayout() {
     const { user: userInfo, token } = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
-    const isViewLogin = useMatch(routes.login); // Checking current route matches the login route
-    const isViewRegister = useMatch(routes.register); // Checking current route matches the register route
+    const isViewLogin = useMatch(routes?.login); // Checking current route matches the login route
+    const isViewRegister = useMatch(routes?.register); // Checking current route matches the register route
 
     // Checking current route is either the login or register route
     const isViewBlank = isViewLogin || isViewRegister;

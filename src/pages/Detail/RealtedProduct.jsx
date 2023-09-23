@@ -23,7 +23,7 @@ function RealtedProduct(props) {
         // Dispatch an action to store the selected product information in the Redux store
         dispatch(infoProductActions.setInfoProduct(item));
         // Navigate to the detail page of the selected product
-        navigate(routes.detail.replace(":productId", item._id));
+        navigate(routes?.detail.replace(":productId", item._id));
     };
 
     return (

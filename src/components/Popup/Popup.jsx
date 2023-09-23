@@ -30,7 +30,7 @@ function Popup() {
         // Dispatching the hidePopUp action to hide the popup
         dispatch(popActions.hidePopUp());
         // Navigating to the detail page of the selected product
-        navigate(routes.detail.replace(":productId", item._id));
+        navigate(routes?.detail.replace(":productId", item._id));
     };
 
     return (

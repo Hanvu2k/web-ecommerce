@@ -21,7 +21,7 @@ function Login() {
     useEffect(() => {
         // Redirect to home page if the user is already authenticated
         if (token) {
-            navigate(routes.home);
+            navigate(routes?.home);
         }
     }, [token, navigate]);
 

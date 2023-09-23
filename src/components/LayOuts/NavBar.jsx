@@ -14,9 +14,9 @@ function NavBar({ userInfo, isAuth }) {
     // Getting the authentication status
     const navigate = useNavigate();
 
-    const isHome = useMatch(routes.home);
-    const isShop = useMatch(routes.shop);
-    const isHistory = useMatch(routes.history);
+    const isHome = useMatch(routes?.home);
+    const isShop = useMatch(routes?.shop);
+    const isHistory = useMatch(routes?.history);
 
     const dispatch = useDispatch();
 
@@ -24,12 +24,12 @@ function NavBar({ userInfo, isAuth }) {
     const userLogOuthandler = () => {
         dispatch(userActions.logoutHandler());
         dispatch(apiConfig.logout());
-        navigate(routes.home);
+        navigate(routes?.home);
     };
 
     // Navigating to the cart route when the cart icon is clicked
     const moveToCartHandler = () => {
-        navigate(routes.cart, { replace: true });
+        navigate(routes?.cart, { replace: true });
     };
 
     return (
@@ -37,20 +37,20 @@ function NavBar({ userInfo, isAuth }) {
             <div className="nav-content container d-flex justify-content-between align-items-center">
                 <div className="nav-left d-flex">
                     <NavLink
-                        to={routes.home}
+                        to={routes?.home}
                         className={`nav-item ${isHome && "active"}`}
                     >
                         Home
                     </NavLink>
                     <NavLink
-                        to={routes.shop}
+                        to={routes?.shop}
                         className={`nav-item mx-3 ${isShop && "active"}`}
                     >
                         Shope
                     </NavLink>
                     {isAuth && (
                         <NavLink
-                            to={routes.history}
+                            to={routes?.history}
                             className={`nav-item ${isHistory && "active"}`}
                         >
                             History
@@ -90,7 +90,7 @@ function NavBar({ userInfo, isAuth }) {
                     ) : (
                         <div
                             className="d-flex mr-3 nav-item"
-                            onClick={() => navigate(routes.login)}
+                            onClick={() => navigate(routes?.login)}
                         >
                             <div className="nav-item-icon mr-1">
                                 <UserIcon />
