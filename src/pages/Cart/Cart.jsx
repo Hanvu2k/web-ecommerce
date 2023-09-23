@@ -202,7 +202,7 @@ function Cart() {
                                 })}
                             </tbody>
                         </table>
-                        {products.length === 0 && (
+                        {products?.length === 0 && (
                             <div className="no-product">No product</div>
                         )}
                     </div>
