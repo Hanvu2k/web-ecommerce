@@ -1,1 +1,3 @@
-export * from "./routes";
+import publicRoutes from './routes'
+
+export default publicRoutes
