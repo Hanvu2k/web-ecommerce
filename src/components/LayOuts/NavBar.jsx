@@ -22,7 +22,6 @@ function NavBar({ userInfo, isAuth }) {
 
     // Dispatching the logoutHandler action when the user logs out
     const userLogOuthandler = () => {
-        localStorage.removeItem("carts");
         navigate(routes?.home);
         dispatch(userActions.logoutHandler());
         dispatch(apiConfig.logout());
