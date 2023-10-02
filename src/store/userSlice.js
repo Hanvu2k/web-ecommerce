@@ -17,7 +17,7 @@ const UserSilce = createSlice({
         // Action handler for logout
         logoutHandler() {
             removeToken();
- window.location.reload();           
+            window.location.reload();           
         },
     },
     extraReducers: {
