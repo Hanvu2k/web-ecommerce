@@ -21,7 +21,7 @@ function Cart() {
     // Getting the product.updateCart
     const products = useSelector((state) => state.cart.carts?.products);
     const { total } = useSelector((state) => state.cart?.carts);
-    const cart = useSelector((state) => state.cart.carts);
+    const cart = useSelector((state) => state.cart?.carts);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
