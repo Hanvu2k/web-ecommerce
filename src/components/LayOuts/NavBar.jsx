@@ -21,8 +21,8 @@ function NavBar({ userInfo, isAuth }) {
     const dispatch = useDispatch();
 
     // Dispatching the logoutHandler action when the user logs out
-    const userLogOuthandler = () => {
-        navigate(routes?.home);
+    const userLogOuthandler = async () => {
+       await navigate(routes?.home);
         dispatch(userActions.logoutHandler());
         dispatch(apiConfig.logout());
     };
