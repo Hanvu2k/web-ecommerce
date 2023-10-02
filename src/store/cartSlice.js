@@ -3,14 +3,12 @@ import { saveToStorage, getFromStorage } from "../utils";
 import { addToCart, deleteProductInCart, getCart } from "../api/cartApi";
 
 // get initial cart state from localStorage or set default values
-const carts = JSON.parse(getFromStorage("carts")) || {} ;
+const carts = JSON.parse(getFromStorage("carts")) || {products: [],
+        total: 0} ;
 
 // Define the initial state for the cartSlice
 const initialCartState = {
-    carts: carts || {
-        products: [],
-        total: 0,
-    },
+    carts: carts 
 };
 
 const cartSlice = createSlice({
