@@ -16,6 +16,7 @@ const UserSilce = createSlice({
     reducers: {
         // Action handler for logout
         logoutHandler() {
+            localStorage.removeItem("carts");
             removeToken();
             window.location.reload();
         },
