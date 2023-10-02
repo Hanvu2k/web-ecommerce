@@ -22,9 +22,9 @@ function NavBar({ userInfo, isAuth }) {
 
     // Dispatching the logoutHandler action when the user logs out
     const userLogOuthandler = () => {
+        navigate(routes?.home);
         dispatch(userActions.logoutHandler());
         dispatch(apiConfig.logout());
-        navigate(routes?.home);
     };
 
     // Navigating to the cart route when the cart icon is clicked
