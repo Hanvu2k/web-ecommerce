@@ -17,6 +17,7 @@ const UserSilce = createSlice({
         // Action handler for logout
         logoutHandler() {
             removeToken();
+            localStorage.removeItem("carts");
             window.location.reload();
         },
     },
