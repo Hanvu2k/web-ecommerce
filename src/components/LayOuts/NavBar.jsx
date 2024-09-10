@@ -40,7 +40,7 @@ function NavBar({ userInfo, isAuth }) {
                         to={routes?.home}
                         className={`nav-item ${isHome && "active"}`}
                     >
-                        Home
+                        Home Test
                     </NavLink>
                     <NavLink
                         to={routes?.shop}
